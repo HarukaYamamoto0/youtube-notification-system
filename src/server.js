@@ -7,6 +7,7 @@ async function start() {
     const app = express();
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
+    
     await require("./database/index.js")();
 
     app.listen(process.env.PORT || 3000, () => {

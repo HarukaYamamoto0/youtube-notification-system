@@ -9,7 +9,11 @@ const robots = {
 
 async function start() {
   try {
-    const youtube = {};
+    const youtube = {
+      channels: [],
+      servers: [],
+      newVideos: []
+    };
 
     await robots.getNewVideos(youtube, database);
     await robots.setUrls(youtube);

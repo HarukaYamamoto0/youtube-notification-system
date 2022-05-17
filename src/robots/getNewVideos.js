@@ -3,9 +3,7 @@ const { getChannelVideos } = require("yt-channel-info");
 
 async function robot(youtube, database) {
   const channels = await Channel.find();
-
-  youtube.channels = channels;
-  youtube.newVideos = [];
+  youtube.channels = [...channels];
 
   for (const channel of channels) {
     try {
@@ -18,7 +16,6 @@ async function robot(youtube, database) {
 
       const lastId = database.get(channel.id);
       const newId = videos.items[0].videoId;
-      console.log(lastId, newId);
 
       if (!lastId) return database.set(channel.id, newId);
       else if (newId === lastId) return;

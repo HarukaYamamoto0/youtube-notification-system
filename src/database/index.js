@@ -7,8 +7,8 @@ async function start() {
 
     await connect(process.env.tokenData);
     console.log("[DATABASE] - connected to database");
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     process.exit(1);
   }
 }

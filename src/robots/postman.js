@@ -2,7 +2,7 @@ const { WebhookClient } = require("discord.js");
 
 async function robot(youtube) {
   const servers = youtube.servers;
-  if (!servers?.length) return;
+  if (!servers.length) return;
 
   for (const server of servers) {
     try {
@@ -14,11 +14,11 @@ async function robot(youtube) {
         username: process.env.username,
         avatarURL: process.env.avatarURL,
       });
-      console.log("enviado!");
     } catch (e) {
       console.log(e);
     }
   }
+  youtube.servers = new Array();
 }
 
 module.exports = robot;
