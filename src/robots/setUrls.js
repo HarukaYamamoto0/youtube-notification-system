@@ -2,15 +2,13 @@ async function robot(youtube) {
   const { channels, newVideos } = youtube;
   if (!newVideos.length) return;
 
-  for (const videoInfo of newVideos) {
+  for (const video of newVideos) {
     try {
-      const { channelId, url } = videoInfo;
-
-      const channel = channels.find((channel) => channel._id === channelId);
-      const { servers } = channel;
+      const channel = channels.get(video.channelId);
+      const servers = channel.servers;
 
       for (const server of servers) {
-        server.url = url;
+        server.url = video.url;
         youtube.servers.push(server);
       }
     } catch (error) {

@@ -1,36 +1,24 @@
 const Channel = require("../database/Schemas/Channel");
-const { getChannelVideos } = require("yt-channel-info");
 
 async function robot(youtube, database) {
-  const channels = await Channel.find();
-  youtube.channels = [...channels];
-
-  for (const channel of channels) {
+  youtube.channels.forEach(async (channel) => {
     try {
-      const videos = await getChannelVideos({
+      const { id, videos, lastVideoId } = channel;
+      if (!videos.length) return;
+
+      const videoId = videos[0].videoId;
+      if (videoId === lastVideoId) return;
+
+      youtube.newVideos.push({
         channelId: channel.id,
-        sortBy: "newest",
+        url: `https://youtu.be/${videoId}`,
       });
 
-      if (!videos?.items?.length) return;
-
-      const lastId = database.get(channel.id);
-      const newId = videos.items[0].videoId;
-
-      if (!lastId) return database.set(channel.id, newId);
-      else if (newId === lastId) return;
-      else if (newId !== lastId) {
-        database.set(channel.id, newId);
-
-        youtube.newVideos.push({
-          channelId: channel.id,
-          url: `https://youtu.be/${newId}`,
-        });
-      }
+      await Channel.findByIdAndUpdate(id, { lastVideoId: videoId });
     } catch (error) {
       console.log(error);
     }
-  }
+  });
 }
 
 module.exports = robot;
