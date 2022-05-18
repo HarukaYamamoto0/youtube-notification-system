@@ -7,18 +7,17 @@ async function robot(youtube) {
   for (const server of servers) {
     try {
       const webhook = new WebhookClient({ url: server.webhookUrl });
-      const message = server.message.replace("{{link}}", server.url);
+      const message = server.message.replace("{{link}}", server.url + " oi");
 
       await webhook.send({
         content: message,
         username: process.env.username,
         avatarURL: process.env.avatarURL,
       });
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
     }
   }
-  youtube.servers = new Array();
 }
 
 module.exports = robot;
