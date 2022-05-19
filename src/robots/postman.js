@@ -7,7 +7,7 @@ async function robot(youtube) {
   for (const server of servers) {
     try {
       const webhook = new WebhookClient({ url: server.webhookUrl });
-      const message = server.message.replace("{{link}}", server.url + " oi");
+      const message = server.message.replace("{{link}}", server.url);
 
       await webhook.send({
         content: message,
