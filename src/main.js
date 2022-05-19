@@ -1,6 +1,3 @@
-const { Database } = require("appo-database");
-const database = new Database();
-
 const robots = {
   getChannelInfo: require("./robots/getChannelInfo.js"),
   getNewVideos: require("./robots/getNewVideos.js"),
@@ -17,7 +14,7 @@ const youtube = {
 async function start() {
   try {
     await robots.getChannelInfo(youtube);
-    await robots.getNewVideos(youtube, database);
+    await robots.getNewVideos(youtube);
     await robots.setUrls(youtube);
     await robots.postman(youtube);
 

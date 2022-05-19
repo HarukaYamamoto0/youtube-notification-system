@@ -1,6 +1,6 @@
 const Channel = require("../database/Schemas/Channel");
 
-async function robot(youtube, database) {
+async function robot(youtube) {
   youtube.channels.forEach(async (channel) => {
     try {
       const { id, videos, lastVideoId } = channel;
